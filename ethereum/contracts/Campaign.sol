@@ -1,4 +1,4 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.4.26;
 
 contract CampaignFactory {
     address[] public deployedCampaigns;
