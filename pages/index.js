@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from 'semantic-ui-react';
 import factory from '../ethereum/factory';
+import 'semantic-ui-css/semantic.min.css';
 
 class CampaignIndex extends Component {
   // next.js requirement (rendering efficiency)
