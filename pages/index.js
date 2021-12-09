@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'semantic-ui-react';
 import factory from '../ethereum/factory';
+import Layout from '../components/layout';
 import 'semantic-ui-css/semantic.min.css';
 
 class CampaignIndex extends Component {
@@ -25,10 +26,13 @@ class CampaignIndex extends Component {
 
   render() {
     return (
-      <div>
-        {this.renderCampaigns()}
-        <Button content='Create Campaign' icon='add circle' primary />
-      </div>
+      <Layout>
+        <div>
+          <h3>Open Campaigns</h3>
+          {this.renderCampaigns()}
+          <Button content='Create Campaign' icon='add circle' primary />
+        </div>
+      </Layout>
     );
   }
 }
