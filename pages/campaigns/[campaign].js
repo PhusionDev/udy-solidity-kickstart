@@ -1,17 +1,19 @@
-import React, { Component } from "react";
-import Layout from "../../components/layout";
-import CampaignInstance from "../../ethereum/campaign";
+import React, { Component } from 'react';
+import Layout from '../../components/layout';
+import CampaignInstance from '../../ethereum/campaign';
 
 class CampaignShow extends Component {
   static async getInitialProps(props) {
-    // console.log(props);
-    // console.log(props.query.campaign);
     const campaign = CampaignInstance(props.query.campaign);
     const summary = await campaign.methods.getSummary().call();
 
-    console.log(summary);
-
-    return {};
+    return {
+      minimumContribution: summary[0],
+      balance: summary[1],
+      requestsCount: summary[2],
+      approversCount: summary[3],
+      manager: summary[4],
+    };
   }
 
   render() {
