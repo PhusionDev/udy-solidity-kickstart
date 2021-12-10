@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
-class Campaign extends Component {
+class CampaignShow extends Component {
   render() {
     return (
       <div>
-        <h1>Campaign Page</h1>
+        <h3>Campaign Show</h3>
       </div>
     );
   }
 }
 
-export default Campaign;
+export default CampaignShow;
