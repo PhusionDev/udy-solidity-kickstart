@@ -3,7 +3,7 @@ pragma solidity ^0.4.26;
 contract CampaignFactory {
     address[] public deployedCampaigns;
 
-    function createCampaign(uint minimum) public {
+    function createCampaign(uint256 minimum) public {
         address newCampaign = new Campaign(minimum, msg.sender);
         deployedCampaigns.push(newCampaign);
     }
@@ -16,25 +16,25 @@ contract CampaignFactory {
 contract Campaign {
     struct Request {
         string description;
-        uint value;
+        uint256 value;
         address recipient;
         bool complete;
-        uint approvalCount;
+        uint256 approvalCount;
         mapping(address => bool) approvals;
     }
 
     Request[] public requests;
     address public manager;
-    uint public minimumContribution;
+    uint256 public minimumContribution;
     mapping(address => bool) public approvers;
-    uint public approversCount;
+    uint256 public approversCount;
 
     modifier restricted() {
         require(msg.sender == manager);
         _;
     }
 
-    function Campaign(uint minimum, address creator) public {
+    function Campaign(uint256 minimum, address creator) public {
         manager = creator;
         minimumContribution = minimum;
     }
@@ -46,7 +46,7 @@ contract Campaign {
         approversCount++;
     }
 
-    function createRequest(string description, uint value, address recipient) public restricted {
+    function createRequest(string description, uint256 value, address recipient) public restricted {
         Request memory newRequest = Request({
            description: description,
            value: value,
@@ -58,7 +58,7 @@ contract Campaign {
         requests.push(newRequest);
     }
 
-    function approveRequest(uint index) public {
+    function approveRequest(uint256 index) public {
         Request storage request = requests[index];
 
         require(approvers[msg.sender]);
@@ -68,7 +68,7 @@ contract Campaign {
         request.approvalCount++;
     }
 
-    function finalizeRequest(uint index) public restricted {
+    function finalizeRequest(uint256 index) public restricted {
         Request storage request = requests[index];
 
         require(request.approvalCount > (approversCount / 2));
@@ -76,5 +76,19 @@ contract Campaign {
 
         request.recipient.transfer(request.value);
         request.complete = true;
+    }
+
+    function getSummary() public view returns (uint256, uint256, uint256, uint256, address) {
+      return (
+        minimumContribution,
+        this.balance,
+        requests.length,
+        approversCount,
+        manager
+      );
+    }
+
+    function getRequestCount() public view returns (uint256) {
+      return requests.length;
     }
 }
