@@ -20,8 +20,6 @@ class RequestIndex extends Component {
         })
     );
 
-    console.log(requests);
-
     return { address, requests, requestCount, approversCount };
   }
 
