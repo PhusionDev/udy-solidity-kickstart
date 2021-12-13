@@ -29,6 +29,7 @@ class RequestIndex extends Component {
       return (
         <RequestRow
           key={index}
+          id={index}
           request={request}
           address={this.props.address}
         />
@@ -59,8 +60,8 @@ class RequestIndex extends Component {
               <HeaderCell>Finalize</HeaderCell>
             </Row>
           </Header>
+          <Body>{this.renderRows()}</Body>
         </Table>
-        <Body>{this.renderRows()}</Body>
       </Layout>
     );
   }
