@@ -12,17 +12,31 @@ class NewRequest extends Component {
     recipient: '',
   };
 
-  static async getInitialProps() {
+  static async getInitialProps(props) {
     const { campaign } = props.query;
 
     return { campaign };
   }
 
+  onSubmit = async (event) => {
+    event.preventDefault();
+
+    const campaign = CampaignInstance(this.props.campaign);
+    const { description, value, recipient } = this.state;
+
+    try {
+      const accounts = await web3.eth.getAccounts();
+      await campaign.methods
+        .createRequest(description, web3.utils.toWei(value, 'ether'), recipient)
+        .send({ from: accounts[0] });
+    } catch (err) {}
+  };
+
   render() {
     return (
       <Layout>
         <h3>Create a Request</h3>
-        <Form>
+        <Form onSubmit={this.onSubmit}>
           <Form.Field>
             <Label>Description</Label>
             <Input
